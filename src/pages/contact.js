@@ -2,10 +2,13 @@ import { faLocationDot, faPhone, faEnvelope } from "@fortawesome/free-solid-svg-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Col, Row} from "react-bootstrap";
+import Header from '../components/header';
+import Footer from '../components/footer';
 
 const Contact = () =>{
 return(
     <>
+    <Header />
     <div className="content">
             <Row>
                 <Col md={1}></Col>
@@ -31,6 +34,7 @@ return(
                 <Col md={1}></Col>
             </Row>
     </div>
+    <Footer />
     </>
 )
 }

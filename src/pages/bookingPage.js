@@ -1,6 +1,8 @@
 import React from "react";
 import { Col, Row} from "react-bootstrap";
 import {Form, FormLabel, FormGroup, } from "react-bootstrap";
+import Header from '../components/header';
+import Footer from '../components/footer';
 //import Booking from "../components/bookingtab";
 var todayDate = new Date().toISOString().slice(0, 10);
       var date = new Date();
@@ -8,6 +10,7 @@ var todayDate = new Date().toISOString().slice(0, 10);
 const BookingPage = () =>{
 return(
     <>
+    <Header />
     <div className="content">
             <Row>
                 <Col md={3}></Col>
@@ -48,6 +51,7 @@ return(
                 <Col md={3}></Col>
             </Row>
     </div>
+    <Footer />
     </>
 )
 }

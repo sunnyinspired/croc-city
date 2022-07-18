@@ -1,8 +1,6 @@
 import React from "react";
 import { Col, Row} from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope, faLocationDot, faPhone,} from "@fortawesome/free-solid-svg-icons";
 var year = new Date().getFullYear();
 const Footer = () =>{
 return(
@@ -12,17 +10,17 @@ return(
                 <Col md={4} className="contact">
                     <h3>Contact</h3>
                     <p>
-                        <FontAwesomeIcon icon={faLocationDot} />&nbsp;
+                        <i className="bi-geo-alt-fill"></i>&nbsp;
                         Head Office: No. 2, Sabon-Tasha, Mando, Kaduna, Kaduna State.
                     </p>
 
                     <p>
-                        <FontAwesomeIcon icon={faPhone} />&nbsp;
+                    <i className="bi-telephone-fill"></i>&nbsp;
                         (+234) 08027643043, 08051300974
                     </p>
 
                     <p>
-                        <FontAwesomeIcon icon={faEnvelope} />&nbsp;
+                    <i className="bi-envelope-fill"></i>&nbsp;
                         info@croccity.com
                     </p>
                 </Col>
@@ -43,8 +41,11 @@ return(
                         Connect with Us
                     </h3>
                     <p>
-                        Facebook
-                        <FontAwesomeIcon icon={["fab", "github"]} />
+                    <i className="bi-facebook"></i>
+                    <i className="bi-instagram"></i>
+                    <i className="bi-whatsapp"></i>
+                    <i className="bi-twitter"></i>
+                        
                     </p>
                 </Col>
             </Row>

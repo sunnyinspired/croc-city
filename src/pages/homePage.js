@@ -1,10 +1,13 @@
 import React from "react";
 import { Button, Col, Form, Row} from "react-bootstrap"
 import Booking from "../components/bookingtab";
+import Header from '../components/header';
+import Footer from '../components/footer';
 
 const Homepage = () =>{
 return(
     <>
+    <Header />
     <div className="home-1st align-self-center">
             <Row>
             <Col md={6} className="home-1st-text">
@@ -92,6 +95,7 @@ return(
                 </Col>
             </Row>
     </div>
+    <Footer />
     </>
 )
 }
