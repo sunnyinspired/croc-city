@@ -1,0 +1,7 @@
+const AdminContext = createContext({
+                    isLoggedIn: true,
+                    auth: res.data.auth,
+                    token: res.data.token,
+                    admin_id: res.data.userData[0].admin_id,
+                    username: res.data.userData[0].username,
+                });
