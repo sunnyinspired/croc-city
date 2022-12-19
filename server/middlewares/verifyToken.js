@@ -1,13 +1,13 @@
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
 const verifyToken = (req, res, next) =>{
-    const token = req.headers['x-access-token'];
+    const token = req.cookies['accessToken'];
     if(!token){
         res.send("No Token Sent!")
     } else{
         jwt.verify(token, process.env.JWT_KEY, (err, decoded) =>{
             if(err){
-                res.json({auth: false, message: 'You failed the authentication'})
+                return res.status(401).json({auth: false, message:'Token Expired'})
             }
             //req.userId = decoded.id
             next();

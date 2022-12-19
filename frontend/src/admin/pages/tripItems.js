@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { NavItem } from "react-bootstrap";
+import AdminContext from "../components/adminContext";
 
 
 export function Trips(){
@@ -143,10 +144,14 @@ export function Vehicles(){
 };
 
 export const Manifest = React.forwardRef((trip_id, ref) => {
-    //console.log(trip_id.trip_id)
+    const { token } = useContext(AdminContext)
     const [mResponse, setMResponse] = useState([])
     useEffect(() => {
-        axios.get(`/api/get-manifest/${trip_id.trip_id}`).then(res =>{
+        axios.get(`/api/get-manifest/${trip_id.trip_id}`, {
+            headers: {
+                "x-access-token": token
+            }
+        }).then(res =>{
             setMResponse(res.data);
         })
     }, [])

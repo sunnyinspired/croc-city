@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import AdminContext from "./adminContext";
 
-const SideBar = (user) =>{
-
+const SideBar = () =>{
+    const { user } = useContext(AdminContext)
     return(
         <>
             
@@ -76,18 +77,11 @@ const SideBar = (user) =>{
                 <Link to="/reports" className="d-flex align-items-center text-white text-decoration-none">
                     <i className="fs-4 bi-file-bar-graph"></i> <span className="ms-1 d-none d-sm-inline">&nbsp;Reports</span>
                 </Link>
-                    
-
-
-
-
-                
-                
                 <hr />
                 <div className="dropdown pb-4">
                     <Link to="#" className="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                         <i className="fs-4 bi-person-circle"></i>
-                        <span className="d-none d-sm-inline mx-1">User</span>
+                        <span className="d-none d-sm-inline mx-1">{user ? user[0].username : null}</span>
                     </Link>
                     <ul className="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                         <li><Link className="dropdown-item" to="/admin/profile">Profile</Link></li>
@@ -102,7 +96,6 @@ const SideBar = (user) =>{
             </div>
         </div>
         
-
         </>
     )
 }

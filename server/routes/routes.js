@@ -1,12 +1,11 @@
 require('dotenv').config()
 const express = require('express')
 const multer = require('multer')
-const jwt = require('jsonwebtoken')
 const con = require('../config/dbconfig')
 const verifyToken = require('../middlewares/verifyToken')
 const randomstr = require('randomstring')
 const sendBookingMail = require('../mailing/bookingTicket')
-const bcrypt = require('bcrypt');
+const {Login, AuthenticatedUser, RefreshToken, Logout} = require('../controllers/auth.controller')
 
 
 const routes = express.Router()
@@ -36,49 +35,16 @@ const upload = multer({storage:storage}).single("photo");
 const vPhotoUpload = multer({storage:vehiclePhoto}).single("vehiclePhoto");
 
 //LOGIN
-routes.post('/login',  (req, res) =>{
-    const username = req.body.username;
-    const password = req.body.password;
-    con.query("SELECT * FROM `admin_users_tbl` WHERE `username` = ?", [username],(err, results) =>{
-            if(err){
-                res.send(err)
-            }
-            else{
-                if(results.length > 0){
-                    bcrypt.compare(password, results[0].password).then(match =>{
-                        if(match){
-                            const id = results[0].admin_id;
-                            const token = jwt.sign({id}, process.env.JWT_KEY, {
-                                expiresIn: 300
-                            });
-                            const userData = {
-                                admin_id: results[0].admin_id,
-                                username: results[0].username,
-                                role_id: results[0].role_id,
-                            }
-
-                            res.json({auth: true, token:token, userData: userData})
-                        }
-                        else{
-                            res.send({auth:false, message: "Wrong Username / Password Combination"})
-                        }
-                    })
-                    
-                }
-                else{
-                    res.json({auth:false, message: 'User Not Found'})
-                }
-            }
-        }
-
-        )
-
-    });
+routes.post('/login', Login);
+routes.get('/authUser', AuthenticatedUser);
+routes.get('/get-token', RefreshToken);
+routes.post('/logout', Logout);
 
 
 routes.get('/dashboard', verifyToken, (req, res) =>{
-    res.json({message: 'Hello, This is welcome message from the server!'});
+    res.json({message: 'Hello, Welcome to the Croc-City Shuttle Admin Section!'});
 });
+
 
 routes.post('/get-user', verifyToken, (req, res, next) => {
     con.query("SELECT * FROM `admin_users` WHERE admin_id = ?", [req.body.admin_id], (err, results) =>{
@@ -438,7 +404,7 @@ routes.post("/add-admin", async (req, res) =>{
 })
 
 //GET BOOKING FOR MANIFEST
-routes.get("/get-manifest/:trip_id", verifyToken, (req, res) =>{
+routes.get("/get-manifest/:trip_id", verifyToken,  (req, res) =>{
     let getManifest = `SELECT b.passenger_name, b.passenger_sex, b.passenger_age, b.passenger_phone, b.emergency_contact, b.emergency_phone, b.booking_seat,
     t.trip_from, t.trip_to, DATE_FORMAT(t.trip_date, "%d/%m/%Y") as trip_date, DATE_FORMAT(t.trip_date, "%h-%m") as trip_time,
     v.vehicle_name, CONCAT(s.first_name, ' ', s.last_name) as driver_name

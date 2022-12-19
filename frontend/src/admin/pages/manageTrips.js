@@ -2,18 +2,14 @@ import React from "react";
 import SideBar from "../components/sidebar";
 import { useState , } from "react";
 import { GetRoutes, Trips, Vehicles } from "./tripItems";
-import axios from "axios";
-import { useAdminContext } from "./dashboard";
 
 const ManageTrips = () =>{
     const [response, setResponse] = useState('')
 
-    const {token, SetToken} = useAdminContext();
 
     function setValue(e){
             setResponse(e.target.value)
         };
-        console.log("Your Token is: "+ token)
     return(
         <>
         <div className="container-fluid">
@@ -42,7 +38,7 @@ const ManageTrips = () =>{
                     response === 'routes' ? <GetRoutes /> :
                     response === 'trips' ? <Trips /> :
                     response === 'vehicle' ? <Vehicles /> :
-                    token
+                    'No Data'
                 }
             </div>
             

@@ -1,41 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import AdminContext from "../components/adminContext";
 
 const AdminLogin = () =>{
+    const { login } = useContext(AdminContext)
     const [loginInfo, setLoginInfo] = useState({
         username: '',
         password: ''
     });
-
-    const history = useNavigate();
 
     const [loginMessage, setLoginMessage] = useState('')
 
     const setValue = (e) =>{
         setLoginInfo({...loginInfo, [e.target.name]:e.target.value});
     }
-    const Login = async (e) =>{
+    const submitLogin = async (e) =>{
         e.preventDefault()
-       await axios.post("/api/login", loginInfo).then((res) =>{
-            
-            if(res.data.auth === true){                
-                history('/admin/dashboard',{
-                    state:{
-                        token: res.data.token,
-                        user:res.data.user,
-                        isLoggedIn: true
-                    }
-                });
-            }
-            else{
-                setLoginMessage(res.data.message);
-            }
-            
-        }
-
-        );
+       await login(loginInfo)
         setLoginInfo({username:'', password: ''});
     }
 
@@ -49,7 +30,7 @@ const AdminLogin = () =>{
                     <center><img src="/images/logo.png" alt="logo" className="align-self-center" /></center>
                     <h4>Admin Panel</h4>
                     <hr />
-                    <form name="adminLogin" className="form"   onSubmit={Login}>
+                    <form name="adminLogin" className="form"   onSubmit={submitLogin}>
                         <p>
                             <b>Username: </b>
                             <input type="text" className="form-control" placeholder=" Enter Username" 
